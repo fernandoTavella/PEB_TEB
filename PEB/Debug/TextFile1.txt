@@ -1,0 +1,30 @@
+	/*
+	base_entry = &(my_peb->Ldr->InMemoryOrderModuleList);
+	base_entry = base_entry - 1;
+	PLDR_DATA_TABLE_ENTRY a = (PLDR_DATA_TABLE_ENTRY)(ple->Flink - 1);
+	PLDR_DATA_TABLE_ENTRY b = (PLDR_DATA_TABLE_ENTRY)(ple->Flink->Flink - 1);
+	kernel32_dataTable = (PLDR_DATA_TABLE_ENTRY)base_entry->Flink->Flink->Flink;
+	for (PLIST_ENTRY entry = base_entry->Flink; entry != base_entry; entry = entry->Flink) {
+		//entry = entry - 1;
+		kernel32_dataTable = (PLDR_DATA_TABLE_ENTRY)entry;
+		if (!lstrcmpW(kernel32_dataTable->FullDllName.Buffer, dll_name)) {
+			LDR_DATA_TABLE_ENTRY asd = kernel32_dataTable[2];
+			printf("FOUND\n");
+			printf("Kernel32 base address: %x\n",(DWORD)kernel32_dataTable->DllBase);
+		}
+		//entry = entry + 1;
+	}
+
+	for (PLIST_ENTRY pl = base_entry->Flink; pl != base_entry; pl = pl->Flink)
+	{
+		// Here our InMemoryOrderModuleList comes at 2nd position  (at first position InLoadOrderList present) in LDR_DATA_TABLE_ENTRY
+		// so before type casting it, subtract 8 bytes (or 1 as pl is of size 8 byte) from pl
+		//
+		pl = pl - 1;
+		kernel32_dataTable = (PLDR_DATA_TABLE_ENTRY)pl;
+		printf("\n %ls\t%x", kernel32_dataTable->FullDllName.Buffer, (DWORD)kernel32_dataTable->DllBase);
+		// again reset the pointer , so that we can properly point to next flink address
+		//
+		pl = pl + 1;
+	}
+	*/
